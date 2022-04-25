@@ -1,6 +1,5 @@
 version: '3.7'
 services:
-
     frontend:
       image: cmp-frontend-image
       container_name: cmp-frontend-container
@@ -33,7 +32,7 @@ services:
         - cmp-frontend-network
         - cmp-db-network
 
-    appdb:
+    database:
       image: mysql:5.7
       container_name: cmp-db-container
       restart: unless-stopped
@@ -45,8 +44,8 @@ services:
         SERVICE_TAGS: dev
         SERVICE_NAME: mysql
       volumes:
-        - ./initdb:/docker-entrypoint-initdb.d
-        - db_data:/var/lib/mysql
+        - ./mysql:/docker-entrypoint-initdb.d
+        - ./mysql/backup:/var/lib/mysql
       ports:
         - 3306:3306
       networks:
@@ -57,10 +56,10 @@ services:
       container_name: cmp-db-phpmyadmin
       restart: unless-stopped
       environment:
-        PMA_HOST: appdb
+        PMA_HOST: database
         MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       depends_on:
-        - appdb
+        - database
       ports:
         - 8443:80
       networks:

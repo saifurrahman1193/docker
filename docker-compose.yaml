@@ -44,8 +44,9 @@ services:
         SERVICE_TAGS: dev
         SERVICE_NAME: mysql
       volumes:
-        - ./mysql:/docker-entrypoint-initdb.d
-        - ./mysql/backup:/var/lib/mysql
+        - ./mysql:/docker-entrypoint-initdb.d:ro
+        - cmp_db_data:/var/lib/mysql:rw
+        # - ./mysql/backup:/var/lib/mysql:rw
       ports:
         - 3306:3306
       networks:
@@ -72,5 +73,5 @@ networks:
     driver: bridge
 
 volumes:
-  db_data:
-    driver: "local"
+  cmp_db_data:
+#     driver: "local"

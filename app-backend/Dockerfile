@@ -61,7 +61,7 @@ COPY --chown=www:www-data . /var/www
 WORKDIR /var/www
 
 
-# RUN php artisan serve --port=8001
+# RUN php artisan serve --host=0.0.0.0 --port=8001
 
 ### PHP
 ########################################################################

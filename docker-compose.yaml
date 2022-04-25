@@ -70,6 +70,7 @@ networks:
   cmp-frontend-network:
     driver: bridge
   cmp-db-network:
+    driver: bridge
 
 volumes:
   db_data:

@@ -2,18 +2,22 @@ version: '3.7'
 services:
 
     frontend:
-      container_name: cmp-frontend
+      image: cmp-frontend-image
+      container_name: cmp-frontend-container
       build:
         context: ./app-frontend 
+        dockerfile: Dockerfile
       ports:
         - "3000:3000"
       networks:
         - cmp-frontend-network
 
     backend:
-      container_name: cmp-backend
+      image: cmp-backend-image
+      container_name: cmp-backend-container
       build:
         context: ./app-backend/
+        dockerfile: Dockerfile
       restart: unless-stopped
       environment:
         MYSQL_DATABASE: ${DB_DATABASE}
@@ -31,7 +35,7 @@ services:
 
     appdb:
       image: mysql:5.7
-      container_name: cmp-db
+      container_name: cmp-db-container
       restart: unless-stopped
       environment:
         MYSQL_DATABASE: ${DB_DATABASE}

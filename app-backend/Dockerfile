@@ -20,7 +20,7 @@ RUN composer dump-autoload --optimize --classmap-authoritative
 ########################################################################
 ### NodeJS
 
-FROM node:14.17.0-alpine3.12 AS node
+# FROM node:14.17.0-alpine3.12 AS node
 
 WORKDIR /app
 
@@ -61,7 +61,7 @@ COPY --chown=www:www-data . /var/www
 WORKDIR /var/www
 
 
-RUN php artisan serve --port=8001
+# RUN php artisan serve --port=8001
 
 ### PHP
 ########################################################################

@@ -1,24 +1,25 @@
 FROM php:7.4-fpm
 
-# Copy composer.lock and composer.json
-COPY composer.lock composer.json /var/www/
-
 # Set working directory
 WORKDIR /var/www
 
+# Copy composer.lock and composer.json
+COPY composer.lock composer.json /var/www/
+
+
 # Install dependencies
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    locales \
-    zip \
-    jpegoptim optipng pngquant gifsicle \
-    vim \
-    unzip \
-    git \
-    curl
+    build-essential libpng-dev libjpeg62-turbo-dev libfreetype6-dev locales \
+    zip jpegoptim optipng pngquant gifsicle vim unzip git curl build-essential \
+    software-properties-common wget  libwebp-dev
+
+# Add docker php ext repo
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
+    install-php-extensions mbstring pdo_mysql exif pcntl gd memcached
+
+# RUN docker-php-ext-install zip mysqli mbstring pdo pdo_mysql tokenizer xml bcmath opcache pcntl intl soap exif gd
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*

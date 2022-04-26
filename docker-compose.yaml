@@ -27,7 +27,7 @@ services:
       volumes:
         - ./app-backend:/var/www
       ports:
-        - "8001:80"
+        - "8001:8001"
       networks:
         - cmp-frontend-network
         - cmp-db-network

@@ -16,9 +16,9 @@ services:
     react:
       image: cmp-react-image
       container_name: cmp-react-container
-      build:          # let docker know that we build with dockerfile
-        context: ./app-frontend 
-        dockerfile: Dockerfile
+      build:          # let docker know that we build with dockerfile in locally instead of dockerhub
+        context: ./app-frontend   # which is the directory dockerfile will be searched for
+        dockerfile: Dockerfile    # the file name that will be build
       ports:
         - "3000:3000"
       networks:
@@ -36,11 +36,11 @@ services:
         MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
         MYSQL_PASSWORD: ${DB_PASSWORD}
         MYSQL_USER: ${DB_USERNAME}
-      working_dir: /var/www
+      working_dir: /var/www/html
       volumes:
-        - ./app-backend:/var/www
+        - ./app-backend:/var/www/html
       ports:
-        - "8001:80"
+        - "9000:9000"
       networks:
         - cmp-network
       depends_on:

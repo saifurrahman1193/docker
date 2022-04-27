@@ -86,6 +86,7 @@ networks:
   cmp-network:
     driver: bridge
 
+
 volumes:
   cmp_db_data:
 #     driver: "local"

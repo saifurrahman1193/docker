@@ -1,4 +1,6 @@
-## Versions
+## Services & Versions
+
+* nginx
 * laravel 8
 * php 7.4
 * node 14

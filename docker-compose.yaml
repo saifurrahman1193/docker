@@ -1,19 +1,23 @@
 version: '3.7'
 services:
-    frontend:
-      image: cmp-frontend-image
+    nginx:
+      image: cmp-nginx-image
       container_name: cmp-frontend-container
+
+    react:
+      image: cmp-react-image
+      container_name: cmp-react-container
       build:
         context: ./app-frontend 
         dockerfile: Dockerfile
       ports:
         - "3000:3000"
       networks:
-        - cmp-frontend-network
+        - cmp-network
 
-    backend:
-      image: cmp-backend-image
-      container_name: cmp-backend-container
+    php:
+      image: cmp-php-image
+      container_name: cmp-php-container
       build:
         context: ./app-backend/
         dockerfile: Dockerfile
@@ -29,12 +33,13 @@ services:
       ports:
         - "8001:80"
       networks:
-        - cmp-frontend-network
-        - cmp-db-network
+        - cmp-network
+      depends_on:
+        - mysql
 
-    database:
+    mysql:
       image: mysql:5.7
-      container_name: cmp-db-container
+      container_name: cmp-mysql-container
       restart: unless-stopped
       environment:
         MYSQL_DATABASE: ${DB_DATABASE}
@@ -50,26 +55,24 @@ services:
       ports:
         - 3306:3306
       networks:
-        - cmp-db-network
+        - cmp-network
 
     phpmyadmin:
       image: phpmyadmin/phpmyadmin
       container_name: cmp-db-phpmyadmin
       restart: unless-stopped
       environment:
-        PMA_HOST: database
+        PMA_HOST: mysql  # Host of the mysql container run on / localhost ip
         MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       depends_on:
-        - database
+        - mysql
       ports:
         - 8443:80
       networks:
-        - cmp-db-network
+        - cmp-network
 
 networks:
-  cmp-frontend-network:
-    driver: bridge
-  cmp-db-network:
+  cmp-network:
     driver: bridge
 
 volumes:

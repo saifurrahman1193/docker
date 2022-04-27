@@ -6,7 +6,7 @@ services:
       ports:
         - "8088:80"
       volumes:
-        - ./nginx:/var/www/html 
+        - ./app-backend:/var/www/html 
       depends_on: 
         - php
         - mysql

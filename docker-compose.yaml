@@ -1,13 +1,22 @@
 version: '3.7'
 services:
     nginx:
-      image: cmp-nginx-image
-      container_name: cmp-frontend-container
+      image: nginx:stable-alpine
+      container_name: cmp-nginx-container
+      ports:
+        - "8088:80"
+      volumes:
+        - ./nginx:/var/www/html 
+      depends_on: 
+        - php
+        - mysql
+      networks:
+        - cmp-network
 
     react:
       image: cmp-react-image
       container_name: cmp-react-container
-      build:
+      build:          # let docker know that we build with dockerfile
         context: ./app-frontend 
         dockerfile: Dockerfile
       ports:
@@ -38,9 +47,10 @@ services:
         - mysql
 
     mysql:
-      image: mysql:5.7
+      image: mysql:5.7.22
       container_name: cmp-mysql-container
       restart: unless-stopped
+      tty: true
       environment:
         MYSQL_DATABASE: ${DB_DATABASE}
         MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
@@ -53,7 +63,7 @@ services:
         - cmp_db_data:/var/lib/mysql:rw
         # - ./mysql/backup:/var/lib/mysql:rw
       ports:
-        - 3306:3306
+        - "4306:3306"
       networks:
         - cmp-network
 
@@ -67,7 +77,7 @@ services:
       depends_on:
         - mysql
       ports:
-        - 8443:80
+        - "8443:80"
       networks:
         - cmp-network
 

@@ -40,6 +40,7 @@ services:
       working_dir: /var/www/html
       volumes:
         - ./app-backend:/var/www/html/cmp/api
+        - ./php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       ports:
         - "9000:9000"
       networks:
@@ -89,4 +90,4 @@ networks:
 
 volumes:
   cmp_db_data:
-#     driver: "local"
+    # driver: "local"

@@ -54,6 +54,7 @@ services:
       restart: unless-stopped
       tty: true
       environment:
+        # MYSQL_ROOT_HOST: '%'
         MYSQL_DATABASE: ${DB_DATABASE}
         MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
         MYSQL_PASSWORD: ${DB_PASSWORD}

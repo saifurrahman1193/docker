@@ -3,4 +3,5 @@ WORKDIR /app
 COPY . .
 RUN npm install
 RUN npm run build
-ENTRYPOINT npm start
+# ENTRYPOINT npm start
+# CMD ["npm", "start"]

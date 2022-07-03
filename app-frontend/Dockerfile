@@ -4,4 +4,4 @@ COPY . .
 RUN npm install
 RUN npm run build
 # ENTRYPOINT npm start
-# CMD ["npm", "start"]
+CMD ["npm", "start"]

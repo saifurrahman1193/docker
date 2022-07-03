@@ -25,6 +25,8 @@ services:
         - "3000:3000"
       networks:
         - cmp-network
+      stdin_open: true
+      tty: true
 
 
     php:
